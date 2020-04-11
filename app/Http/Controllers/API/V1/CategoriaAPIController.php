@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Http\Requests\API\V1\CreateCategoriaAPIRequest;
-use App\Http\Requests\API\V1\UpdateCategoriaAPIRequest;
-use App\Models\V1\Categoria;
-use App\Repositories\V1\CategoriaRepository;
-use Illuminate\Http\Request;
-use App\Http\Controllers\AppBaseController;
 use Response;
+use App\Models\V1\Categoria;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Http\Controllers\AppBaseController;
+use App\Repositories\V1\CategoriaRepository;
+use App\Http\Resources\API\V1\Categoria\CategoriaCollection;
+use App\Http\Requests\API\V1\Categoria\CreateCategoriaAPIRequest;
+use App\Http\Requests\API\V1\Categoria\UpdateCategoriaAPIRequest;
 
 /**
  * Class CategoriaController
@@ -23,6 +24,7 @@ class CategoriaAPIController extends AppBaseController
     public function __construct(CategoriaRepository $categoriaRepo)
     {
         $this->categoriaRepository = $categoriaRepo;
+        parent::__construct();
     }
 
     /**
@@ -57,15 +59,13 @@ class CategoriaAPIController extends AppBaseController
      *      )
      * )
      */
-    public function index(Request $request)
+    public function index()
     {
-        $categorias = $this->categoriaRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $categorias = QueryBuilder::for(Categoria::class)
+                ->allowedFields(['id', 'nombre','descripcion'])
+                ->get();
 
-        return $this->sendResponse($categorias->toArray(), 'Categorias retrieved successfully');
+        return $this->showAll(new CategoriaCollection($categorias));
     }
 
     /**

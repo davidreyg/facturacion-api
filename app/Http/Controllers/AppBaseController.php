@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use InfyOm\Generator\Utils\ResponseUtil;
 use Response;
+use App\Http\Utils\ApiResponser;
 
 /**
  * @SWG\Swagger(
@@ -18,13 +18,14 @@ use Response;
  */
 class AppBaseController extends Controller
 {
-    public function sendResponse($result, $message)
-    {
-        return Response::json(ResponseUtil::makeResponse($message, $result));
-    }
+    use ApiResponser;
 
-    public function sendError($error, $code = 404)
+    /**
+     * Class constructor.
+     */
+    public function __construct()
     {
-        return Response::json(ResponseUtil::makeError($error), $code);
+        //esta en las rutas principales
+        $this->middleware(['auth.jwt']);
     }
 }

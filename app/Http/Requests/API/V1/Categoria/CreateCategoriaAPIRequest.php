@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\API\V1;
+namespace App\Http\Requests\API\V1\Categoria;
 
 use App\Models\V1\Categoria;
 use InfyOm\Generator\Request\APIRequest;
 
-class UpdateCategoriaAPIRequest extends APIRequest
+class CreateCategoriaAPIRequest extends APIRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,6 @@ class UpdateCategoriaAPIRequest extends APIRequest
      */
     public function rules()
     {
-        $rules = Categoria::$rules;
-        
-        return $rules;
+        return Categoria::$rules;
     }
 }
