@@ -19,6 +19,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-Route::group(['prefix' => 'v1', 'middleware' => 'auth.jwt'], function () {
-    Route::apiResource('categorias', 'V1\CategoriaAPIController');
+Route::group(['prefix' => 'v1'], function () {
+    Route::post('auth/login', 'V1\LoginAPIController@login');
+    Route::post('auth/register', 'V1\LoginAPIController@register');
+    Route::group(['middleware' => ['auth.jwt']], function () {
+        Route::post('auth/logout', 'V1\LoginAPIController@logout');
+        Route::get('auth/refresh', 'V1\LoginAPIController@refresh');
+        Route::get('auth/user', 'V1\LoginAPIController@me');
+
+        Route::apiResource('categorias', 'V1\Categoria\CategoriaAPIController');
+    });   
 });

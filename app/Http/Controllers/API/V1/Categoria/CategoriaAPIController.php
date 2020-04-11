@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\API\V1\Categoria;
 
 use Response;
 use App\Models\V1\Categoria;
