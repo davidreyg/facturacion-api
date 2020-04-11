@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\V1;
 
-use App\Models\Categoria;
+use App\Models\V1\Categoria;
 use App\Repositories\BaseRepository;
 
 /**
  * Class CategoriaRepository
- * @package App\Repositories
- * @version April 10, 2020, 11:49 pm UTC
+ * @package App\Repositories\V1
+ * @version April 10, 2020, 7:21 pm -05
 */
 
 class CategoriaRepository extends BaseRepository

@@ -18,4 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::resource('categorias', 'CategoriaAPIController');
+
+Route::group(['prefix' => 'v1'], function () {
+    Route::resource('categorias', 'V1\CategoriaAPIController');
+});
