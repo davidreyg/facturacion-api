@@ -70,8 +70,8 @@ class Categoria extends Model
      * @var array
      */
     public static $rules = [
-        'id' => 'required',
-        'nombre' => 'required'
+        'nombre' => 'string|required|min:4|max:20',
+        'descripcion' => 'string|nullable|min:4|max:100',
     ];
 
     

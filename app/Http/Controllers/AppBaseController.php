@@ -26,6 +26,6 @@ class AppBaseController extends Controller
     public function __construct()
     {
         //esta en las rutas principales
-        $this->middleware(['auth.jwt']);
+        // $this->middleware(['auth.jwt']);
     }
 }

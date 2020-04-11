@@ -7,6 +7,7 @@ use App\Models\V1\Categoria;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\V1\CategoriaRepository;
+use App\Http\Resources\V1\Categoria\CategoriaResource;
 use App\Http\Resources\API\V1\Categoria\CategoriaCollection;
 use App\Http\Requests\API\V1\Categoria\CreateCategoriaAPIRequest;
 use App\Http\Requests\API\V1\Categoria\UpdateCategoriaAPIRequest;
@@ -24,7 +25,6 @@ class CategoriaAPIController extends AppBaseController
     public function __construct(CategoriaRepository $categoriaRepo)
     {
         $this->categoriaRepository = $categoriaRepo;
-        parent::__construct();
     }
 
     /**
@@ -108,15 +108,15 @@ class CategoriaAPIController extends AppBaseController
      */
     public function store(CreateCategoriaAPIRequest $request)
     {
-        $input = $request->all();
+        $campos = $request->validated();
 
-        $categoria = $this->categoriaRepository->create($input);
+        $categoria = $this->categoriaRepository->create($campos);
 
-        return $this->sendResponse($categoria->toArray(), 'Categoria saved successfully');
+        return $this->showOne(new CategoriaResource($categoria),201);
     }
 
     /**
-     * @param int $id
+     * @param Categoria $categoria
      * @return Response
      *
      * @SWG\Get(
@@ -126,7 +126,7 @@ class CategoriaAPIController extends AppBaseController
      *      description="Get Categoria",
      *      produces={"application/json"},
      *      @SWG\Parameter(
-     *          name="id",
+     *          name="categoria",
      *          description="id of Categoria",
      *          type="integer",
      *          required=true,
@@ -153,16 +153,9 @@ class CategoriaAPIController extends AppBaseController
      *      )
      * )
      */
-    public function show($id)
+    public function show(Categoria $categoria)
     {
-        /** @var Categoria $categoria */
-        $categoria = $this->categoriaRepository->find($id);
-
-        if (empty($categoria)) {
-            return $this->sendError('Categoria not found');
-        }
-
-        return $this->sendResponse($categoria->toArray(), 'Categoria retrieved successfully');
+        return $this->showOne(new CategoriaResource($categoria),200);
     }
 
     /**
@@ -213,33 +206,26 @@ class CategoriaAPIController extends AppBaseController
      */
     public function update($id, UpdateCategoriaAPIRequest $request)
     {
-        $input = $request->all();
+        $campos = $request->validated();
 
-        /** @var Categoria $categoria */
-        $categoria = $this->categoriaRepository->find($id);
+        $categoria = $this->categoriaRepository->update($campos, $id);
 
-        if (empty($categoria)) {
-            return $this->sendError('Categoria not found');
-        }
-
-        $categoria = $this->categoriaRepository->update($input, $id);
-
-        return $this->sendResponse($categoria->toArray(), 'Categoria updated successfully');
+        return $this->showOne(new CategoriaResource($categoria),200);
     }
 
     /**
-     * @param int $id
+     * @param Categoria $categoria
      * @return Response
      *
      * @SWG\Delete(
-     *      path="/categorias/{id}",
+     *      path="/categorias/{categoria}",
      *      summary="Remove the specified Categoria from storage",
      *      tags={"Categoria"},
      *      description="Delete Categoria",
      *      produces={"application/json"},
      *      @SWG\Parameter(
-     *          name="id",
-     *          description="id of Categoria",
+     *          name="categoria",
+     *          description="categoria of Categoria",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -265,17 +251,14 @@ class CategoriaAPIController extends AppBaseController
      *      )
      * )
      */
-    public function destroy($id)
+    public function destroy(Categoria $categoria)
     {
-        /** @var Categoria $categoria */
-        $categoria = $this->categoriaRepository->find($id);
-
-        if (empty($categoria)) {
-            return $this->sendError('Categoria not found');
-        }
+        // if ($categoria->productos()->count()) {
+        //     return $this->errorResponse("Esta categoria tiene productos relacionados",403);
+        // }
 
         $categoria->delete();
 
-        return $this->sendSuccess('Categoria deleted successfully');
+        return $this->showOne(new CategoriaResource($categoria),200);
     }
 }

@@ -21,12 +21,12 @@ class CategoriaResource extends JsonResource
             'links' => [
                 [
                     'rel' => 'self',
-                    'href' => route('categorias.show', $this->id)
+                    'href' => route('api.categorias.show', $this->id)
                 ],
-                [
-                    'rel' => 'categoria.productos',
-                    'href' => route('categorias.productos.index', $this->id)
-                ]
+                // [
+                //     'rel' => 'categoria.productos',
+                //     'href' => route('categorias.productos.index', $this->id)
+                // ]
             ]
         ];
     }
