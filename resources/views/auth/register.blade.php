@@ -45,6 +45,20 @@
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="icon-user"></i>
+                              </span>
+                            </div>
+                            <input type="text" class="form-control {{ $errors->has('username')?'is-invalid':'' }}" name="username" value="{{ old('username') }}"
+                                   placeholder="Username">
+                            @if ($errors->has('username'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('username') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
                                 <span class="input-group-text">@</span>
                             </div>
                             <input type="email" class="form-control {{ $errors->has('email')?'is-invalid':'' }}" name="email" value="{{ old('email') }}" placeholder="Email">
