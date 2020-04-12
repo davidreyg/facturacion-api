@@ -15,12 +15,12 @@ class CategoriaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'nombre' => $this->nombre,
+            'id'          => $this->id,
+            'nombre'      => $this->nombre,
             'descripcion' => $this->descripcion,
-            'links' => [
+            'links'       => [
                 [
-                    'rel' => 'self',
+                    'rel'  => 'self',
                     'href' => route('api.categorias.show', $this->id)
                 ],
                 // [

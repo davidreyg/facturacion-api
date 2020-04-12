@@ -74,5 +74,10 @@ class Categoria extends Model
         'descripcion' => 'string|nullable|min:4|max:100',
     ];
 
+    public function productos()
+    {
+        return $this->hasMany(Producto::class);
+    }
+
     
 }

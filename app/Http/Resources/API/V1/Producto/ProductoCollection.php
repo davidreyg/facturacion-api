@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\API\V1\Categoria;
+namespace App\Http\Resources\API\V1\Producto;
 
-use App\Models\V1\Categoria;
-use App\Http\Resources\V1\Categoria\CategoriaResource;
+use App\Models\V1\Producto;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoriaCollection extends ResourceCollection
+class ProductoCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,8 +15,8 @@ class CategoriaCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $this->collection->transform(function (Categoria $categoria) {
-            return (new CategoriaResource($categoria));
+        $this->collection->transform(function (Producto $producto) {
+            return (new ProductoResource($producto));
         });
         return [
             'data' => $this->collection

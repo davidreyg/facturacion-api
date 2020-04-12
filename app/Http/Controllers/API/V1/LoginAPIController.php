@@ -58,7 +58,7 @@ class LoginAPIController extends AppBaseController
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth()->guard('api')->refresh());
     }
     /**
      * @param Request $request
@@ -91,18 +91,17 @@ class LoginAPIController extends AppBaseController
      * @param RegistrationFormRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(UserRegistrationRequest $request)
+    public function register(Request $request)
     {
         $user = new User();
+        $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
-
-        return response()->json([
-            'success'   =>  true,
-            'data'      =>  $user
-        ], 200);
+		$token = JWTAuth::fromUser($user);
+        return $this->respondWithToken($token);
+        
     }
 
     /**
@@ -118,6 +117,6 @@ class LoginAPIController extends AppBaseController
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires' => auth('api')->factory()->getTTL() ,
-        ])->header('Authorization', $token);;
+        ])->header('Authorization',$token);;
     }
 }

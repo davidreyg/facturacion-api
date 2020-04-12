@@ -24,5 +24,6 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('auth/user', 'V1\LoginAPIController@me');
 
         Route::apiResource('categorias', 'V1\Categoria\CategoriaAPIController');
+        Route::apiResource('productos', 'V1\Producto\ProductoAPIController');
     });   
 });
