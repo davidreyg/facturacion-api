@@ -10,6 +10,8 @@
     "require": {
         "php": "^7.2",
         "appointer/swaggervel": "dev-master",
+        "barryvdh/laravel-ide-helper": "^2.6",
+        "cknow/laravel-money": "^4.0",
         "doctrine/dbal": "~2.3",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^1.0",
@@ -28,7 +30,6 @@
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.6",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "laravel/ui": "1.0",

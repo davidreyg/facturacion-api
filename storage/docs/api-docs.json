@@ -92,7 +92,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "categoria",
                         "in": "path",
                         "description": "id of Categoria",
                         "required": true,
@@ -165,7 +165,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/categorias/{categoria}": {
             "delete": {
                 "tags": [
                     "Categoria"
@@ -177,9 +179,208 @@
                 ],
                 "parameters": [
                     {
+                        "name": "categoria",
+                        "in": "path",
+                        "description": "categoria of Categoria",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/productos": {
+            "get": {
+                "tags": [
+                    "Producto"
+                ],
+                "summary": "Get a listing of the Productos.",
+                "description": "Get all Productos",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Producto"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Producto"
+                ],
+                "summary": "Store a newly created Producto in storage",
+                "description": "Store Producto",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Producto that should be stored",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Producto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Producto"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/productos/{id}": {
+            "get": {
+                "tags": [
+                    "Producto"
+                ],
+                "summary": "Display the specified Producto",
+                "description": "Get Producto",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
                         "name": "id",
                         "in": "path",
-                        "description": "id of Categoria",
+                        "description": "id of Producto",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Producto"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Producto"
+                ],
+                "summary": "Update the specified Producto in storage",
+                "description": "Update Producto",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Producto",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Producto that should be updated",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/Producto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Producto"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Producto"
+                ],
+                "summary": "Remove the specified Producto from storage",
+                "description": "Delete Producto",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id of Producto",
                         "required": true,
                         "type": "integer"
                     }
@@ -225,6 +426,60 @@
                 "descripcion": {
                     "description": "descripcion",
                     "type": "string"
+                },
+                "created_at": {
+                    "description": "created_at",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "description": "updated_at",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "Producto": {
+            "required": [
+                "nombre",
+                "stock",
+                "precio_compra",
+                "precio_venta",
+                "ganancia"
+            ],
+            "properties": {
+                "id": {
+                    "description": "id",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "nombre": {
+                    "description": "nombre",
+                    "type": "string"
+                },
+                "descripcion": {
+                    "description": "descripcion",
+                    "type": "string"
+                },
+                "stock": {
+                    "description": "stock",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "precio_compra": {
+                    "description": "precio_compra",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "precio_venta": {
+                    "description": "precio_venta",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "ganancia": {
+                    "description": "ganancia",
+                    "type": "integer",
+                    "format": "int32"
                 },
                 "created_at": {
                     "description": "created_at",

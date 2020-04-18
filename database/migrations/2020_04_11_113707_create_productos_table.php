@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
             $table->integer('precio_compra');
             $table->integer('precio_venta');
             $table->integer('ganancia')->unsigned();
+            $table->string('moneda', 3);
             $table->integer('categoria_id')->unsigned();
             $table->timestamps();
             $table->foreign('categoria_id')->references('id')->on('categorias')

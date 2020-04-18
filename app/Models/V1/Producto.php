@@ -79,6 +79,7 @@ class Producto extends Model
         'precio_compra',
         'precio_venta',
         'ganancia',
+        'moneda',
         'categoria_id'
     ];
 
@@ -88,13 +89,14 @@ class Producto extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'nombre' => 'string',
-        'stock' => 'integer',
+        'id'            => 'integer',
+        'nombre'        => 'string',
+        'stock'         => 'integer',
         'precio_compra' => 'integer',
-        'precio_venta' => 'integer',
-        'ganancia' => 'integer',
-        'categoria_id' => 'integer'
+        'precio_venta'  => 'integer',
+        'ganancia'      => 'integer',
+        'moneda'        => 'string',
+        'categoria_id'  => 'integer'
     ];
 
     /**
@@ -103,13 +105,14 @@ class Producto extends Model
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required',
-        'stock' => 'required',
+        'nombre'        => 'required',
+        'stock'         => 'required',
         'precio_compra' => 'required',
-        'precio_venta' => 'required',
-        'ganancia' => 'required',
-        'descripcion' => 'string|nullable|min:4|max:100',
-        'categoria_id' => 'required|exists:categorias,id',
+        'precio_venta'  => 'required',
+        'ganancia'      => 'required',
+        'moneda'        => 'string|required',
+        'descripcion'   => 'string|nullable|min:4|max:100',
+        'categoria_id'  => 'required|exists:categorias,id',
     ];
 
     public function categoria()

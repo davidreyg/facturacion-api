@@ -62,7 +62,7 @@ class ProductoAPIController extends AppBaseController
      */
     public function index()
     {
-        $productos = QueryBuilder::for(Producto::class)
+		$productos = QueryBuilder::for(Producto::class)
                 ->allowedIncludes(['categoria'])
                 ->get();
 
@@ -208,18 +208,11 @@ class ProductoAPIController extends AppBaseController
      */
     public function update($id, UpdateProductoAPIRequest $request)
     {
-        $input = $request->all();
+        $campos = $request->validated();
 
-        /** @var Producto $producto */
-        $producto = $this->productoRepository->find($id);
+        $producto = $this->productoRepository->update($campos, $id);
 
-        if (empty($producto)) {
-            return $this->sendError('Producto not found');
-        }
-
-        $producto = $this->productoRepository->update($input, $id);
-
-        return $this->sendResponse($producto->toArray(), 'Producto updated successfully');
+	return $this->showOne(new ProductoResource($producto),200);
     }
 
     /**

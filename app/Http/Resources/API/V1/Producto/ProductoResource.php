@@ -23,7 +23,9 @@ class ProductoResource extends JsonResource
             'precio_venta' => $this->precio_venta,
             'precio_compra' => $this->precio_compra,
             'ganancia' => $this->ganancia,
+            'moneda' => $this->moneda,
             'categoria' => CategoriaResource::make($this->categoria),
+			'categoria_id' => $this->categoria->id,
             'links' => [
                 [
                     'rel' => 'self',

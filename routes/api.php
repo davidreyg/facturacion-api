@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +17,16 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1'], function () {
     Route::post('auth/login', 'V1\LoginAPIController@login');
     Route::post('auth/register', 'V1\LoginAPIController@register');
-
+    Route::apiResource('categorias', 'V1\Categoria\CategoriaAPIController');
 
     Route::group(['middleware' => ['auth.jwt']], function () {
         Route::post('auth/logout', 'V1\LoginAPIController@logout');
         Route::get('auth/refresh', 'V1\LoginAPIController@refresh');
         Route::get('auth/user', 'V1\LoginAPIController@me');
 
-        Route::apiResource('categorias', 'V1\Categoria\CategoriaAPIController');
+
         Route::apiResource('productos', 'V1\Producto\ProductoAPIController');
-    });   
+    });
 });
+
+

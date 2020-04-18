@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\V1\Categoria;
 
-use Response;
 use App\Models\V1\Categoria;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Controllers\AppBaseController;
@@ -253,9 +252,9 @@ class CategoriaAPIController extends AppBaseController
      */
     public function destroy(Categoria $categoria)
     {
-        // if ($categoria->productos()->count()) {
-        //     return $this->errorResponse("Esta categoria tiene productos relacionados",403);
-        // }
+        if ($categoria->productos()->count()) {
+            return $this->errorResponse("Esta categoria tiene productos relacionados",403);
+        }
 
         $categoria->delete();
 
