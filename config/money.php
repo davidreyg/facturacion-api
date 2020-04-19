@@ -6,6 +6,6 @@ return [
     | Laravel money
     |--------------------------------------------------------------------------
      */
-    'locale' => config('app.locale', 'es'),
+    'locale' => 'es-PE',
     'currency' => config('app.currency', 'PEN'),
 ];

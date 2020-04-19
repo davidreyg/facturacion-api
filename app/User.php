@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\V1\Empleado;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -17,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name','username','email', 'password',
+        'username', 'password','empleado_id',
     ];
 
     /**
@@ -56,5 +57,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class);
     }
 }

@@ -1,31 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\API\V1\Producto;
+namespace App\Http\Controllers\API\V1\TipoDocumento;
+
 
 use Response;
-use App\Models\V1\Producto;
+use Illuminate\Http\Request;
+use App\Models\V1\TipoDocumento;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Controllers\AppBaseController;
-use App\Repositories\V1\ProductoRepository;
-use App\Http\Resources\API\V1\Producto\ProductoResource;
-use App\Http\Resources\API\V1\Producto\ProductoCollection;
-use App\Http\Requests\API\V1\Producto\CreateProductoAPIRequest;
-use App\Http\Requests\API\V1\Producto\UpdateProductoAPIRequest;
-
+use App\Repositories\V1\TipoDocumentoRepository;
+use App\Http\Resources\API\V1\TipoDocumento\TipoDocumentoCollection;
+use App\Http\Requests\API\V1\TipoDocumento\CreateTipoDocumentoAPIRequest;
+use App\Http\Requests\API\V1\TipoDocumento\UpdateTipoDocumentoAPIRequest;
+use App\Http\Resources\API\V1\TipoDocumento\TipoDocumentoResource;
 
 /**
- * Class ProductoController
+ * Class TipoDocumentoController
  * @package App\Http\Controllers\API\V1
  */
 
-class ProductoAPIController extends AppBaseController
+class TipoDocumentoAPIController extends AppBaseController
 {
-    /** @var  ProductoRepository */
-    private $productoRepository;
+    /** @var  TipoDocumentoRepository */
+    private $tipoDocumentoRepository;
 
-    public function __construct(ProductoRepository $productoRepo)
+    public function __construct(TipoDocumentoRepository $tipoDocumentoRepo)
     {
-        $this->productoRepository = $productoRepo;
+        $this->tipoDocumentoRepository = $tipoDocumentoRepo;
     }
 
     /**
@@ -33,10 +34,10 @@ class ProductoAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/productos",
-     *      summary="Get a listing of the Productos.",
-     *      tags={"Producto"},
-     *      description="Get all Productos",
+     *      path="/tipoDocumentos",
+     *      summary="Get a listing of the TipoDocumentos.",
+     *      tags={"TipoDocumento"},
+     *      description="Get all TipoDocumentos",
      *      produces={"application/json"},
      *      @SWG\Response(
      *          response=200,
@@ -50,7 +51,7 @@ class ProductoAPIController extends AppBaseController
      *              @SWG\Property(
      *                  property="data",
      *                  type="array",
-     *                  @SWG\Items(ref="#/definitions/Producto")
+     *                  @SWG\Items(ref="#/definitions/TipoDocumento")
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -62,29 +63,29 @@ class ProductoAPIController extends AppBaseController
      */
     public function index()
     {
-		$productos = QueryBuilder::for(Producto::class)
-                ->allowedIncludes(['categoria'])
+		$tipoDocumento = QueryBuilder::for(TipoDocumento::class)
+                ->allowedIncludes(['tipo_documento'])
                 ->get();
 
-        return $this->showAll(new ProductoCollection($productos));
+        return $this->showAll(new TipoDocumentoCollection($tipoDocumento));
     }
 
     /**
-     * @param CreateProductoAPIRequest $request
+     * @param CreateTipoDocumentoAPIRequest $request
      * @return Response
      *
      * @SWG\Post(
-     *      path="/productos",
-     *      summary="Store a newly created Producto in storage",
-     *      tags={"Producto"},
-     *      description="Store Producto",
+     *      path="/tipoDocumentos",
+     *      summary="Store a newly created TipoDocumento in storage",
+     *      tags={"TipoDocumento"},
+     *      description="Store TipoDocumento",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="Producto that should be stored",
+     *          description="TipoDocumento that should be stored",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Producto")
+     *          @SWG\Schema(ref="#/definitions/TipoDocumento")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -97,7 +98,7 @@ class ProductoAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/Producto"
+     *                  ref="#/definitions/TipoDocumento"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -107,13 +108,13 @@ class ProductoAPIController extends AppBaseController
      *      )
      * )
      */
-    public function store(CreateProductoAPIRequest $request)
+    public function store(CreateTipoDocumentoAPIRequest $request)
     {
         $input = $request->validated();
 
-        $producto = $this->productoRepository->create($input);
+        $tipoDocumento = $this->tipoDocumentoRepository->create($input);
 
-        return $this->showOne(new ProductoResource($producto),201);
+        return $this->showOne(new TipoDocumentoResource($tipoDocumento),201);
     }
 
     /**
@@ -121,14 +122,14 @@ class ProductoAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Get(
-     *      path="/productos/{id}",
-     *      summary="Display the specified Producto",
-     *      tags={"Producto"},
-     *      description="Get Producto",
+     *      path="/tipoDocumentos/{id}",
+     *      summary="Display the specified TipoDocumento",
+     *      tags={"TipoDocumento"},
+     *      description="Get TipoDocumento",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of Producto",
+     *          description="id of TipoDocumento",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -144,7 +145,7 @@ class ProductoAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/Producto"
+     *                  ref="#/definitions/TipoDocumento"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -154,26 +155,26 @@ class ProductoAPIController extends AppBaseController
      *      )
      * )
      */
-    public function show(Producto $producto)
+    public function show(TipoDocumento $tipoDocumento)
     {
-        /** @var Producto $producto */
-        return $this->showOne(new ProductoResource($producto),200);
+        /** @var TipoDocumento $tipoDocumento */
+        return $this->showOne(new TipoDocumentoResource($tipoDocumento),200);
     }
 
     /**
      * @param int $id
-     * @param UpdateProductoAPIRequest $request
+     * @param UpdateTipoDocumentoAPIRequest $request
      * @return Response
      *
      * @SWG\Put(
-     *      path="/productos/{id}",
-     *      summary="Update the specified Producto in storage",
-     *      tags={"Producto"},
-     *      description="Update Producto",
+     *      path="/tipoDocumentos/{id}",
+     *      summary="Update the specified TipoDocumento in storage",
+     *      tags={"TipoDocumento"},
+     *      description="Update TipoDocumento",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of Producto",
+     *          description="id of TipoDocumento",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -181,9 +182,9 @@ class ProductoAPIController extends AppBaseController
      *      @SWG\Parameter(
      *          name="body",
      *          in="body",
-     *          description="Producto that should be updated",
+     *          description="TipoDocumento that should be updated",
      *          required=false,
-     *          @SWG\Schema(ref="#/definitions/Producto")
+     *          @SWG\Schema(ref="#/definitions/TipoDocumento")
      *      ),
      *      @SWG\Response(
      *          response=200,
@@ -196,7 +197,7 @@ class ProductoAPIController extends AppBaseController
      *              ),
      *              @SWG\Property(
      *                  property="data",
-     *                  ref="#/definitions/Producto"
+     *                  ref="#/definitions/TipoDocumento"
      *              ),
      *              @SWG\Property(
      *                  property="message",
@@ -206,13 +207,13 @@ class ProductoAPIController extends AppBaseController
      *      )
      * )
      */
-    public function update($id, UpdateProductoAPIRequest $request)
+    public function update($id, UpdateTipoDocumentoAPIRequest $request)
     {
         $campos = $request->validated();
 
-        $producto = $this->productoRepository->update($campos, $id);
+        $tipoDocumento = $this->tipoDocumentoRepository->update($campos, $id);
 
-        return $this->showOne(new ProductoResource($producto),200);
+        return $this->showOne(new TipoDocumentoResource($tipoDocumento),200);
     }
 
     /**
@@ -220,14 +221,14 @@ class ProductoAPIController extends AppBaseController
      * @return Response
      *
      * @SWG\Delete(
-     *      path="/productos/{id}",
-     *      summary="Remove the specified Producto from storage",
-     *      tags={"Producto"},
-     *      description="Delete Producto",
+     *      path="/tipoDocumentos/{id}",
+     *      summary="Remove the specified TipoDocumento from storage",
+     *      tags={"TipoDocumento"},
+     *      description="Delete TipoDocumento",
      *      produces={"application/json"},
      *      @SWG\Parameter(
      *          name="id",
-     *          description="id of Producto",
+     *          description="id of TipoDocumento",
      *          type="integer",
      *          required=true,
      *          in="path"
@@ -253,9 +254,10 @@ class ProductoAPIController extends AppBaseController
      *      )
      * )
      */
-    public function destroy(Producto $producto)
+    public function destroy(TipoDocumento $tipoDocumento)
     {
-        $producto->delete();
-        return $this->showOne(new ProductoResource($producto),200);
+        /** @var TipoDocumento $tipoDocumento */
+        $tipoDocumento->delete();
+        return $this->showOne(new TipoDocumentoResource($tipoDocumento),200);
     }
 }
