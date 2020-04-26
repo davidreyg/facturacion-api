@@ -23,12 +23,6 @@ class CategoriaAPIController extends AppBaseController
 
     public function __construct(CategoriaRepository $categoriaRepo)
     {
-        $DATABASE_URL = parse_url(env('DATABASE_URL'));
-        $host = $DATABASE_URL["host"] ?? null;
-        $username = $DATABASE_URL["user"] ?? null;
-        $password = $DATABASE_URL["pass"] ?? null;
-        $database = substr($DATABASE_URL["path"], 1);
-        dd($DATABASE_URL);
         $this->categoriaRepository = $categoriaRepo;
     }
 
