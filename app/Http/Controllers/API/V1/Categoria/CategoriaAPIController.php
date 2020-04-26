@@ -6,7 +6,7 @@ use App\Models\V1\Categoria;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\V1\CategoriaRepository;
-use App\Http\Resources\V1\Categoria\CategoriaResource;
+use App\Http\Resources\API\V1\Categoria\CategoriaResource;
 use App\Http\Resources\API\V1\Categoria\CategoriaCollection;
 use App\Http\Requests\API\V1\Categoria\CreateCategoriaAPIRequest;
 use App\Http\Requests\API\V1\Categoria\UpdateCategoriaAPIRequest;
@@ -23,6 +23,7 @@ class CategoriaAPIController extends AppBaseController
 
     public function __construct(CategoriaRepository $categoriaRepo)
     {
+        dd(__DIR__ . '/../vendor/autoload.php');
         $this->categoriaRepository = $categoriaRepo;
     }
 
