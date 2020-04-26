@@ -23,6 +23,7 @@ class CategoriaAPIController extends AppBaseController
 
     public function __construct(CategoriaRepository $categoriaRepo)
     {
+        dd(env('DATABASE_URL'));
         $this->categoriaRepository = $categoriaRepo;
     }
 
