@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\API\V1;
+namespace App\Http\Requests\API\V1\Empleado;
 
 use App\Models\V1\Empleado;
 use InfyOm\Generator\Request\APIRequest;

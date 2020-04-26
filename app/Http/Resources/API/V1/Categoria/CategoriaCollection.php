@@ -3,7 +3,7 @@
 namespace App\Http\Resources\API\V1\Categoria;
 
 use App\Models\V1\Categoria;
-use App\Http\Resources\V1\Categoria\CategoriaResource;
+use App\Http\Resources\API\V1\Categoria\CategoriaResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CategoriaCollection extends ResourceCollection

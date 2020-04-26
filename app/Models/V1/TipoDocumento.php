@@ -80,9 +80,9 @@ class TipoDocumento extends Model
      * @var array
      */
     public static $rules = [
-        'nombre' => 'required',
-        'tabla' => 'nullable',
-        'tamaño' => 'required'
+        'nombre' => 'required|string',
+        'tabla' => 'string|nullable',
+        'tamaño' => 'required|numeric'
     ];
 
     public function empleados()

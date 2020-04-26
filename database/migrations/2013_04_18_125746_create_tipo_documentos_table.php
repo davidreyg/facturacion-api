@@ -16,7 +16,7 @@ class CreateTipoDocumentosTable extends Migration
         Schema::create('tipo_documentos', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('nombre');
-            $table->string('tabla');
+            $table->string('tabla')->nullable();
             $table->integer('tamaño');
             $table->timestamps();
             $table->softDeletes();
