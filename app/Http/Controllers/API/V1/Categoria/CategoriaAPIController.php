@@ -23,7 +23,6 @@ class CategoriaAPIController extends AppBaseController
 
     public function __construct(CategoriaRepository $categoriaRepo)
     {
-        dd(__DIR__);
         $this->categoriaRepository = $categoriaRepo;
     }
 
