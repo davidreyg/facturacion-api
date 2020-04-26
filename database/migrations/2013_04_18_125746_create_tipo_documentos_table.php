@@ -17,7 +17,7 @@ class CreateTipoDocumentosTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('nombre');
             $table->string('tabla')->nullable();
-            $table->integer('tamano');
+            $table->integer('tamaño');
             $table->timestamps();
             $table->softDeletes();
         });
